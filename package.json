@@ -1,0 +1,33 @@
+{
+  "name": "bet-tracker",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "bunx --bun astro dev",
+    "start": "bunx --bun astro dev",
+    "build": "bunx --bun astro check && astro build",
+    "preview": "bunx --bun astro preview",
+    "astro": "bunx --bun astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.3.1",
+    "@astrojs/node": "^6.0.3",
+    "@astrojs/preact": "^3.0.1",
+    "@astrojs/react": "^3.0.4",
+    "@astrojs/tailwind": "^5.0.2",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "astro": "^3.4.3",
+    "htmx.org": "^1.9.7",
+    "preact": "^10.6.5",
+    "preact-render-to-string": "^6.2.2",
+    "sass": "^1.69.5",
+    "tailwindcss": "^3.0.24",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "bun-types": "^1.0.9",
+    "prettier-plugin-astro": "^0.12.1",
+    "prettier-plugin-tailwindcss": "^0.5.6"
+  }
+}

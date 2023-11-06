@@ -1,0 +1,17 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "organizeImports": true
+  },
+
+  "vim.easymotion": true,
+  "vim.hlsearch": true,
+  "vim.searchHighlightColor": "#0000FF",
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+
+  "files.associations": {
+    "*.scss": "tailwindcss"
+  }
+}

@@ -7,7 +7,7 @@ RUN bun run build
 
 FROM oven/bun:canary-slim
 ENV HOST=0.0.0.0
-ENV PORT=4321
+ENV PORT=8080
 COPY --from=build /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
 WORKDIR /app

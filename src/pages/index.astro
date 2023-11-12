@@ -12,15 +12,10 @@ const cardDetails: CardProps[] = [
 
 <RootLayout>
   <main>
-    <h1
-      class="mt-5 text-center text-2xl font-bold tracking-tight [word-spacing:-7px]"
-    >
-      Bet Tracker
-    </h1>
     <div
       class="mx-auto grid max-w-md grid-cols-2 gap-2 p-5 md:max-w-full md:grid-cols-4"
     >
-      {cardDetails.map((card) => <Card {...card} client:load />)}
+      {cardDetails.map((card) => <Card {...card} />)}
     </div>
   </main>
 </RootLayout>

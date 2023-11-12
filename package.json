@@ -7,7 +7,8 @@
     "start": "bunx --bun astro dev",
     "build": "bunx --bun astro check && astro build",
     "preview": "bunx --bun astro preview",
-    "astro": "bunx --bun astro"
+    "astro": "bunx --bun astro",
+    "migration": "bun ./src/database/migration"
   },
   "dependencies": {
     "@astrojs/check": "^0.3.1",
@@ -22,9 +23,11 @@
     "react-dom": "^18.0.0",
     "react-icons": "^4.11.0",
     "tailwindcss": "^3.0.24",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.7",
     "bun-types": "^1.0.11",
     "prettier-plugin-astro": "^0.12.1",
     "prettier-plugin-tailwindcss": "^0.5.7",

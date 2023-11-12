@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <header>
       <nav className="flex items-center justify-between border-b border-gray-800 p-5">
-        <a href="/" className="text-sm font-bold">
+        <a id="home" href="/" className="text-sm font-bold">
           Bet Tracker
         </a>
         <a href="/add-bet">

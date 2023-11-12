@@ -6,7 +6,6 @@ import { getAllBets } from "../database/database";
 import type { GetBetDto } from "../models/add-bet.model";
 
 const betList = (await getAllBets()) as unknown as GetBetDto[];
-console.log(betList);
 
 const cardDetails: CardProps[] = [
   { title: "Profit", amount: 100 },

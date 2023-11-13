@@ -1,6 +1,6 @@
-import Input from "../ui/input";
-import Button from "../ui/button";
 import type React from "react";
+import Button from "../ui/button";
+import Input from "../ui/input";
 
 export default function AddBetForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -14,6 +14,9 @@ export default function AddBetForm() {
         document.getElementById("home")?.click();
       }
     });
+
+    const event = new CustomEvent("open-toast", { detail: "Bet added!" });
+    dispatchEvent(event);
   };
 
   return (

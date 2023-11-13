@@ -1,11 +1,6 @@
 ---
-import RootLayout from "../layouts/root-layout.astro";
 import Card, { type CardProps } from "../components/card/card";
-import BetList from "../components/bet-list/bet-list";
-import { getAllBets } from "../database/database";
-import type { GetBetDto } from "../models/add-bet.model";
-
-const betList = (await getAllBets()) as unknown as GetBetDto[];
+import RootLayout from "../layouts/root-layout.astro";
 
 const cardDetails: CardProps[] = [
   { title: "Profit", amount: 100 },
@@ -22,6 +17,5 @@ const cardDetails: CardProps[] = [
     >
       {cardDetails.map((card) => <Card {...card} />)}
     </div>
-    <BetList bets={betList} />
   </main>
 </RootLayout>

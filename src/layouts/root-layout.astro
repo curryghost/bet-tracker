@@ -2,6 +2,7 @@
 import "../styles/root.scss";
 import Navbar from "../components/navbar/navbar";
 import { ViewTransitions } from "astro:transitions";
+import Toast from "../components/toast/toast";
 ---
 
 <!doctype html>
@@ -16,6 +17,9 @@ import { ViewTransitions } from "astro:transitions";
     <ViewTransitions />
   </head>
   <body>
+    <div transition:persist="toast">
+      <Toast client:load />
+    </div>
     <Navbar />
     <slot />
   </body>

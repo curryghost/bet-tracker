@@ -8,7 +8,7 @@ import react from "@astrojs/react";
 export default defineConfig({
   vite: {
     ssr: {
-      noExternal: ["react-icons"],
+      noExternal: ["react-icons", "firebase-admin"],
     },
   },
   output: "server",

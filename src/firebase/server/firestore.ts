@@ -1,3 +1,4 @@
+import { Firestore } from "@google-cloud/firestore";
 import { v4 as uuidv4 } from "uuid";
 import type { AddBetDto, GetBetDto } from "../../models/add-bet.model";
 import { app } from "./firebase";
@@ -13,7 +14,10 @@ export const addBets = async (bets: AddBetDto, idToken: string) => {
     updatedAt: new Date().toISOString(),
   };
   if (isValid) {
-    const db = app.firestore();
+    const db = new Firestore({
+      projectId: "bet-tracker-404817",
+      keyFilename: "/workspaces/bet-tracker/service-account-key.json",
+    });
     const docRef = db.collection("bets").doc("test");
     await docRef.set(newBet);
   }

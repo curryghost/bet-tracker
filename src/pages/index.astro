@@ -1,6 +1,15 @@
 ---
 import Card, { type CardProps } from "../components/card/card";
+import { verifyIdToken } from "../firebase/server/firebase";
 import RootLayout from "../layouts/root-layout.astro";
+
+const idToken = Astro.cookies.get("idToken");
+if (idToken && idToken.value) {
+  const isValid = await verifyIdToken(idToken.value);
+  if (!isValid) {
+    return;
+  }
+}
 
 const cardDetails: CardProps[] = [
   { title: "Profit", amount: 100 },

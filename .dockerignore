@@ -6,3 +6,4 @@ node_modules/
 .prettierrc
 README.md
 bin.lockb
+service-account-key.json

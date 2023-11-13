@@ -15,9 +15,13 @@ export default function Navbar() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         localStorage.setItem("user", JSON.stringify(user));
+        user.getIdToken().then((token) => {
+          document.cookie = `idToken=${token};`;
+        });
         setShowSignOut(true);
       } else {
         localStorage.removeItem("user");
+        document.cookie = `idToken=;`;
         setShowSignOut(false);
         if (window.location.pathname !== "/sign-in")
           window.location.replace("/sign-in");

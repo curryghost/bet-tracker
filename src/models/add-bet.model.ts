@@ -6,7 +6,7 @@ export interface AddBetDto {
 
 export interface GetBetDto {
   id: string;
-  match_id: string;
+  matchId: string;
   odds: string;
   stake: string;
   createdAt: string;

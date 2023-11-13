@@ -16,7 +16,6 @@ export const addBets = async (bets: AddBetDto, idToken: string) => {
   if (isValid) {
     const db = new Firestore({
       projectId: "bet-tracker-404817",
-      keyFilename: "/workspaces/bet-tracker/service-account-key.json",
     });
     const docRef = db.collection("bets").doc("test");
     await docRef.set(newBet);

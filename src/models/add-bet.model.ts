@@ -1,3 +1,5 @@
+import type { BetStatus } from "../firebase/server/model";
+
 export interface AddBetDto {
   matchId: string;
   odds: string;
@@ -5,10 +7,16 @@ export interface AddBetDto {
 }
 
 export interface GetBetDto {
-  id: string;
-  matchId: string;
-  odds: string;
-  stake: string;
+  matchId: number;
+  odds: number;
+  stake: number;
   createdAt: string;
   updatedAt: string;
+  status: BetStatus;
+}
+
+export interface GetUserDto {
+  name: string;
+  currentBankRoll: number;
+  bets: GetBetDto[];
 }

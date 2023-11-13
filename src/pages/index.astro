@@ -1,21 +1,46 @@
 ---
 import Card, { type CardProps } from "../components/card/card";
-import { verifyIdToken } from "../firebase/server/firebase";
+import { getBets } from "../firebase/server/firestore";
+import { BetStatus, type Bets } from "../firebase/server/model";
 import RootLayout from "../layouts/root-layout.astro";
 
 const idToken = Astro.cookies.get("idToken");
-if (idToken && idToken.value) {
-  const isValid = await verifyIdToken(idToken.value);
-  if (!isValid) {
-    return;
-  }
+if (!idToken || !idToken.value) {
+  return;
 }
 
+const calBet = (bet: Bets) => {
+  return bet.odds * bet.stake - bet.stake;
+};
+
+const bets = await getBets(idToken.value);
+const profit = bets
+  .filter((bet) => bet.status !== BetStatus.Pending)
+  .reduce((acc, bet) => {
+    if (bet.status === BetStatus.Won) {
+      return acc + calBet(bet);
+    }
+    return acc - bet.stake;
+  }, 0);
+const potentialProfit = bets
+  .filter((bet) => bet.status === BetStatus.Pending)
+  .reduce((acc, bet) => {
+    return acc + calBet(bet);
+  }, 0);
+
+const potentialLost =
+  100 -
+  bets
+    .filter((bet) => bet.status === BetStatus.Pending)
+    .reduce((acc, bet) => {
+      return acc + bet.stake;
+    }, 0);
+
 const cardDetails: CardProps[] = [
-  { title: "Profit", amount: 100 },
-  { title: "Losses", amount: 20.2 },
-  { title: "Bank Roll", amount: 30.1 },
-  { title: "Potential Profit", amount: -30.5 },
+  { title: "Profit", amount: profit },
+  { title: "Bank Roll", amount: profit + 100 },
+  { title: "Potential Profit", amount: potentialProfit },
+  { title: "Potential Lost", amount: potentialLost },
 ];
 ---
 

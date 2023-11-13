@@ -3,7 +3,7 @@ ENV NODE_ENV=production
 COPY ./ /app
 WORKDIR /app
 RUN bun install --production
-RUN bun run build
+RUN bun run build --config astro.config.prod.mjs
 
 FROM node:21-alpine3.18
 ENV HOST=0.0.0.0

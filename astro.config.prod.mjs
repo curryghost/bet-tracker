@@ -6,6 +6,11 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
+  vite: {
+    ssr: {
+      noExternal: ["react-icons", "firebase-admin"],
+    },
+  },
   output: "server",
   adapter: node({
     mode: "standalone",

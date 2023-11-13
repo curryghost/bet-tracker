@@ -5,3 +5,4 @@ node_modules/
 .gitignore
 .prettierrc
 README.md
+bin.lockb

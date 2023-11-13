@@ -5,10 +5,17 @@ import { ImCancelCircle } from "react-icons/im";
 export default function Toast() {
   const [isOpen, setIsopen] = useState(false);
   const [message, setMessage] = useState("");
+  const [timeoutId, setTimeoutId] = useState(0);
 
   const handleOpenToast = (e: Event) => {
     setMessage((e as CustomEvent).detail);
     setIsopen(true);
+  };
+
+  const handleCloseToast = () => {
+    setIsopen(false);
+    setMessage("");
+    clearTimeout(timeoutId);
   };
 
   useEffect(() => {
@@ -21,11 +28,11 @@ export default function Toast() {
 
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => {
-        setIsopen(false);
-        setMessage("");
-      }, 3000);
+      setTimeoutId(setTimeout(handleCloseToast, 3000));
     }
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [isOpen]);
 
   if (isOpen) {
@@ -35,7 +42,7 @@ export default function Toast() {
         className="absolute right-10 top-7 inline-block h-20 w-72 rounded-lg bg-indigo-900 p-3 shadow-md shadow-gray-800"
       >
         <p className="text-md font-bold ">{message}</p>
-        <button className="absolute right-2 top-2">
+        <button onClick={handleCloseToast} className="absolute right-2 top-2">
           <IconContext.Provider
             value={{
               size: "18px",

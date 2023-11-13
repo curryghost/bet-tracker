@@ -6,7 +6,7 @@ import RootLayout from "../layouts/root-layout.astro";
 
 const idToken = Astro.cookies.get("idToken");
 if (!idToken || !idToken.value) {
-  return;
+  return Astro.redirect("/sign-in");
 }
 
 const calBet = (bet: Bets) => {

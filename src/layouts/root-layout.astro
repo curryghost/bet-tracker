@@ -24,16 +24,5 @@ import Toast from "../components/toast/toast";
       <Navbar client:load />
     </div>
     <slot />
-    <script>
-      const routeGuard = () => {
-        const token = localStorage.getItem("user");
-        if (!token && window.location.pathname !== "/sign-in") {
-          window.location.href = "/sign-in";
-        }
-      };
-
-      document.addEventListener("astro:page-load", routeGuard);
-      document.addEventListener("astro:after-swap", routeGuard);
-    </script>
   </body>
 </html>

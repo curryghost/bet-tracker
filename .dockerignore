@@ -5,5 +5,4 @@ node_modules/
 .gitignore
 .prettierrc
 README.md
-bun.lockb
 service-account-key.json

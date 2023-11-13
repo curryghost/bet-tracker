@@ -1,0 +1,11 @@
+---
+import GoogleSignIn from "../../components/google-sign-in/google-sign-in";
+import RootLayout from "../../layouts/root-layout.astro";
+---
+
+<RootLayout>
+  <h1 class="mt-8 text-center text-2xl font-bold">Sign in</h1>
+  <div class="mt-10 flex flex-col items-center">
+    <GoogleSignIn client:load />
+  </div>
+</RootLayout>

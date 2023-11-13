@@ -20,7 +20,9 @@ import Toast from "../components/toast/toast";
     <div transition:persist="toast">
       <Toast client:load />
     </div>
-    <Navbar />
+    <div transition:persist="navbar">
+      <Navbar client:load />
+    </div>
     <slot />
   </body>
 </html>

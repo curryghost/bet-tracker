@@ -5,7 +5,7 @@ import { ImCancelCircle } from "react-icons/im";
 export default function Toast() {
   const [isOpen, setIsopen] = useState(false);
   const [message, setMessage] = useState("");
-  const [timeoutId, setTimeoutId] = useState(0);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout>();
 
   const handleOpenToast = (e: Event) => {
     setMessage((e as CustomEvent).detail);

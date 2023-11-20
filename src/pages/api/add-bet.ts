@@ -10,12 +10,12 @@ export const POST: APIRoute = async ({ request }) => {
     const formData = await request.formData();
     const bet = Object.fromEntries(formData) as unknown as AddBetDto;
     if (!bet) throw new ApiError(ErrorType.BAD_REQUEST, "No bet provided");
-    console.log(request.headers.getSetCookie());
+    console.log(request.headers.get("cookie"));
     const sessionCookie = request.headers
-      .getSetCookie()
+      .get("cookie")
+      ?.split(";")
       .find((val) => val.includes("session"))
       ?.split("=")[1];
-
     const idToken = await verifySessionCookie(sessionCookie);
     if (!idToken) throw new Error("No idToken provided");
 

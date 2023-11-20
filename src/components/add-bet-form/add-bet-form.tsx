@@ -1,3 +1,4 @@
+import { navigate } from "astro:transitions/client";
 import type React from "react";
 import Button from "../ui/button";
 import Input from "../ui/input";
@@ -10,8 +11,8 @@ export default function AddBetForm() {
       method: "POST",
       body: formData,
     }).then((res) => {
-      if (res.redirected) {
-        document.getElementById("home")?.click();
+      if (res.ok) {
+        navigate("/");
       }
     });
 

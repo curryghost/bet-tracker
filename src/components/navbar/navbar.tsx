@@ -34,7 +34,7 @@ export default function Navbar({ isLogin }: NavBarProps) {
   return (
     <header>
       <nav className="flex items-center justify-between border-b border-gray-800 p-5">
-        <a id="home" href="/" className="text-sm font-bold">
+        <a href="/" className="text-sm font-bold">
           Bet Tracker
         </a>
         <div className="flex gap-5">

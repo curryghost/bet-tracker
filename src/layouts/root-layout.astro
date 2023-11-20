@@ -6,7 +6,7 @@ import { verifySessionCookie } from "../firebase/server/auth";
 import "../styles/root.scss";
 
 const cookie = Astro.cookies.get("session")?.value;
-const isLogin = cookie ? await verifySessionCookie(cookie) : false;
+const isLogin = cookie ? !!(await verifySessionCookie(cookie)) : false;
 ---
 
 <!doctype html>

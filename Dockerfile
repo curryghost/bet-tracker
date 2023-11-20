@@ -1,8 +1,10 @@
 FROM oven/bun:canary-slim as build
 ENV NODE_ENV=production
-COPY ./ /app
+COPY ./bun.lockb /app
+COPY ./package.json /app
 WORKDIR /app
 RUN bun install --production
+COPY . .
 RUN bun run build
 
 FROM node:21-alpine3.18

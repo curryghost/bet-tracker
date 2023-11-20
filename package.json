@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bunx astro dev",
     "start": "bunx astro dev",
-    "build": "bunx astro check && astro build",
+    "build": "bunx astro check && astro build --config astro.config.prod.mjs",
     "preview": "bunx astro preview",
     "astro": "bunx astro"
   },

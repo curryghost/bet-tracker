@@ -5,4 +5,4 @@ node_modules/
 .gitignore
 .prettierrc
 README.md
-service-account-key.json
+server-key.json

@@ -10,9 +10,18 @@ export const auth = getAuth(app);
 const googleAuthProvider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
-  return await signInWithPopup(auth, googleAuthProvider);
+  const res = await signInWithPopup(auth, googleAuthProvider);
+  const idToken = await res.user.getIdToken();
+  return fetch("/api/auth", {
+    method: "POST",
+    body: JSON.stringify({ idToken }),
+  });
 };
 
 export const signOutUser = async () => {
-  return await signOut(auth);
+  await signOut(auth);
+  return fetch("/api/auth", {
+    method: "POST",
+    body: JSON.stringify({}),
+  });
 };

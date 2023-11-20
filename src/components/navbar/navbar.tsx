@@ -1,32 +1,34 @@
+import { navigate } from "astro:transitions/client";
 import { useEffect, useState } from "react";
 import { PiSignOutBold } from "react-icons/pi";
 import { auth, signOutUser } from "../../firebase/client/auth";
 import Button from "../ui/button";
 
-export default function Navbar() {
-  const [showSignOut, setShowSignOut] = useState(false);
+interface NavBarProps {
+  isLogin: boolean;
+}
+
+export default function Navbar({ isLogin }: NavBarProps) {
+  const [showSignOut, setShowSignOut] = useState(isLogin);
   const handleSignOut = () => {
-    signOutUser().catch((e) => {
-      console.log(e.message);
-    });
+    signOutUser()
+      .then(() => navigate("/sign-in"))
+      .catch((e) => {
+        console.log(e.message);
+      });
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-        user.getIdToken().then((token) => {
-          document.cookie = `idToken=${token};`;
-        });
-        setShowSignOut(true);
-      } else {
-        localStorage.removeItem("user");
-        document.cookie = `idToken=;`;
-        setShowSignOut(false);
-        if (window.location.pathname !== "/sign-in")
-          window.location.replace("/sign-in");
-      }
+    if (isLogin) setShowSignOut(true);
+    if (!isLogin) {
+      setShowSignOut(false);
+    }
+
+    const authSub = auth.onAuthStateChanged((user) => {
+      if (user) return setShowSignOut(true);
+      return setShowSignOut(false);
     });
+    return () => authSub();
   }, []);
 
   return (

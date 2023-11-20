@@ -1,47 +1,59 @@
 ---
 import Card, { type CardProps } from "../components/card/card";
-import { getBets } from "../firebase/server/firestore";
-import { BetStatus, type Bets } from "../firebase/server/model";
+import { verifySessionCookie } from "../firebase/server/auth";
+import {
+  BetStatus,
+  type GetBetDto,
+} from "../firebase/server/firestore/models/bet.model";
+import { getUser } from "../firebase/server/firestore/repositories/user.repositories";
 import RootLayout from "../layouts/root-layout.astro";
+import { ApiError, logger } from "../utils/error";
+import { ErrorType } from "../utils/error/models";
 
-const idToken = Astro.cookies.get("idToken");
-if (!idToken || !idToken.value) {
+let cardDetails: CardProps[] = [];
+try {
+  const cookie = Astro.cookies.get("session")?.value;
+  if (!cookie) throw new ApiError(ErrorType.UNAUTHORIZED, "No Cookie");
+  const idToken = await verifySessionCookie(cookie);
+
+  const calcBet = (bet: GetBetDto) => {
+    return bet.odds * bet.stake - bet.stake;
+  };
+
+  const bets = await getUser(idToken.uid);
+  const profit = bets!
+    .filter((bet) => bet.status !== BetStatus.PENDING)
+    .reduce((acc, bet) => {
+      if (bet.status === BetStatus.WIN) {
+        return acc + calcBet(bet);
+      }
+      return acc - bet.stake;
+    }, 0);
+  const potentialProfit = bets
+    .filter((bet) => bet.status === BetStatus.PENDING)
+    .reduce((acc, bet) => {
+      return acc + calcBet(bet);
+    }, 0);
+  const potentialLost =
+    100 -
+    bets
+      .filter((bet) => bet.status === BetStatus.PENDING)
+      .reduce((acc, bet) => {
+        return acc + bet.stake;
+      }, 0);
+
+  cardDetails = [
+    { title: "Profit", amount: profit },
+    { title: "Bank Roll", amount: profit + 100 },
+    { title: "Potential Profit", amount: potentialProfit },
+    { title: "Potential Lost", amount: potentialLost },
+  ];
+} catch (err) {
+  if (err instanceof ApiError) return Astro.redirect("/sign-in");
+
+  logger(err);
   return Astro.redirect("/sign-in");
 }
-
-const calBet = (bet: Bets) => {
-  return bet.odds * bet.stake - bet.stake;
-};
-
-const bets = await getBets(idToken.value);
-const profit = bets
-  .filter((bet) => bet.status !== BetStatus.Pending)
-  .reduce((acc, bet) => {
-    if (bet.status === BetStatus.Won) {
-      return acc + calBet(bet);
-    }
-    return acc - bet.stake;
-  }, 0);
-const potentialProfit = bets
-  .filter((bet) => bet.status === BetStatus.Pending)
-  .reduce((acc, bet) => {
-    return acc + calBet(bet);
-  }, 0);
-
-const potentialLost =
-  100 -
-  bets
-    .filter((bet) => bet.status === BetStatus.Pending)
-    .reduce((acc, bet) => {
-      return acc + bet.stake;
-    }, 0);
-
-const cardDetails: CardProps[] = [
-  { title: "Profit", amount: profit },
-  { title: "Bank Roll", amount: profit + 100 },
-  { title: "Potential Profit", amount: potentialProfit },
-  { title: "Potential Lost", amount: potentialLost },
-];
 ---
 
 <RootLayout>

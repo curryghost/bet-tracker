@@ -6,12 +6,12 @@
   "image": "mcr.microsoft.com/devcontainers/base:jammy",
   "features": {
     "ghcr.io/devcontainers/features/rust:1": {
-		"version": "latest",
-		"profile": "complete"
-	},
+      "version": "latest",
+      "profile": "complete"
+    },
     "ghcr.io/devcontainers-contrib/features/node-asdf:0": {
-		"version": "latest"
-	},
+      "version": "latest"
+    },
     "ghcr.io/shyim/devcontainers-features/bun:0": {}
   },
 
@@ -33,7 +33,8 @@
         "astro-build.astro-vscode",
         "bradlc.vscode-tailwindcss",
         "otovo-oss.htmx-tags",
-        "github.copilot"
+        "github.copilot",
+        "rangav.vscode-thunder-client"
       ]
     }
   }

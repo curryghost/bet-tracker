@@ -1,16 +1,18 @@
+import { navigate } from "astro:transitions/client";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithGoogle } from "../../firebase/client/auth";
 
 export default function GoogleSignIn() {
   const handleSignIn = () => {
     signInWithGoogle()
-      .then(() => {
-        window.location.replace("/");
+      .then((res) => {
+        if (res.status === 200) navigate("/");
       })
       .catch((e) => {
         console.log(e.message);
       });
   };
+
   return (
     <button
       onClick={handleSignIn}

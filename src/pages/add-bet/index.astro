@@ -1,8 +1,15 @@
 ---
 import AddBetForm from "../../components/add-bet-form/add-bet-form";
+import { verifySessionCookie } from "../../firebase/server/auth";
 import RootLayout from "../../layouts/root-layout.astro";
-const idToken = Astro.cookies.get("idToken");
-if (!idToken || !idToken.value) {
+import { ApiError } from "../../utils/error";
+import { ErrorType } from "../../utils/error/models";
+
+try {
+  const cookie = Astro.cookies.get("session")?.value;
+  if (!cookie) throw new ApiError(ErrorType.UNAUTHORIZED, "No Cookie");
+  await verifySessionCookie(cookie);
+} catch {
   return Astro.redirect("/sign-in");
 }
 ---

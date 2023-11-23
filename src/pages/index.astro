@@ -35,7 +35,6 @@ try {
       return acc + calcBet(bet);
     }, 0);
   const potentialLost =
-    100 -
     bets
       .filter((bet) => bet.status === BetStatus.PENDING)
       .reduce((acc, bet) => {

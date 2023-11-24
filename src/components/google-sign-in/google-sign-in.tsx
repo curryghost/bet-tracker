@@ -1,17 +1,24 @@
 import { navigate } from "astro:transitions/client";
+import { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { signInWithGoogle } from "../../firebase/client/auth";
+import { checkRedirect, signInWithGoogle } from "../../firebase/client/auth";
 
 export default function GoogleSignIn() {
   const handleSignIn = () => {
-    signInWithGoogle()
-      .then((res) => {
-        if (res.status === 200) navigate("/");
-      })
-      .catch((e) => {
-        console.log(e.message);
-      });
+    signInWithGoogle();
   };
+
+  useEffect(() => {
+    checkRedirect()
+      .then((res) => {
+        if (res.status === 200) {
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <button

@@ -14,9 +14,9 @@ export interface BetSchema {
 }
 
 export interface AddBetDto {
-  matchId: number;
-  odds: number;
-  stake: number;
+  matchId: string;
+  odds: string;
+  stake: string;
 }
 
 export interface GetBetDto extends BetSchema {

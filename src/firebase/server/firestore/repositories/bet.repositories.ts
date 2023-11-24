@@ -3,9 +3,9 @@ import { BetStatus, type AddBetDto, type BetSchema } from "../models/bet.model";
 
 export const addBet = async (bet: AddBetDto, uid: string) => {
   const newBet: BetSchema = {
-    matchId: bet.matchId,
-    odds: bet.odds,
-    stake: bet.stake,
+    matchId: +bet.matchId,
+    odds: +bet.odds,
+    stake: +bet.stake,
     status: BetStatus.PENDING,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),

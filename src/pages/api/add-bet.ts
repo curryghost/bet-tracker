@@ -10,7 +10,6 @@ export const POST: APIRoute = async ({ request }) => {
     const formData = await request.formData();
     const bet = Object.fromEntries(formData) as unknown as AddBetDto;
     if (!bet) throw new ApiError(ErrorType.BAD_REQUEST, "No bet provided");
-    console.log(request.headers.get("cookie"));
     const sessionCookie = request.headers
       .get("cookie")
       ?.split(";")

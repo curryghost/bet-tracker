@@ -15,31 +15,29 @@ try {
   const cookie = Astro.cookies.get("session")?.value;
   if (!cookie) throw new ApiError(ErrorType.UNAUTHORIZED, "No Cookie");
   const idToken = await verifySessionCookie(cookie);
+  const bets = await getUser(idToken.uid);
 
-  const calcBet = (bet: GetBetDto) => {
+  const calcBetWinnings = (bet: GetBetDto) => {
     return bet.odds * bet.stake - bet.stake;
   };
+  const pendingBets = bets.filter((bet) => bet.status === BetStatus.PENDING);
 
-  const bets = await getUser(idToken.uid);
   const profit = bets!
     .filter((bet) => bet.status !== BetStatus.PENDING)
     .reduce((acc, bet) => {
       if (bet.status === BetStatus.WIN) {
-        return acc + calcBet(bet);
+        return acc + calcBetWinnings(bet);
       }
       return acc - bet.stake;
     }, 0);
-  const potentialProfit = bets
-    .filter((bet) => bet.status === BetStatus.PENDING)
-    .reduce((acc, bet) => {
-      return acc + calcBet(bet);
-    }, 0);
-  const potentialLost =
-    bets
-      .filter((bet) => bet.status === BetStatus.PENDING)
-      .reduce((acc, bet) => {
-        return acc + bet.stake;
-      }, 0);
+
+  const potentialProfit = pendingBets.reduce((acc, bet) => {
+    return acc + calcBetWinnings(bet);
+  }, 0);
+
+  const potentialLost = pendingBets.reduce((acc, bet) => {
+    return acc - bet.stake;
+  }, 0);
 
   cardDetails = [
     { title: "Profit", amount: profit },
@@ -48,8 +46,6 @@ try {
     { title: "Potential Lost", amount: potentialLost },
   ];
 } catch (err) {
-  if (err instanceof ApiError) return Astro.redirect("/sign-in");
-
   logger(err);
   return Astro.redirect("/sign-in");
 }

@@ -34,7 +34,6 @@ export const getUser = async (uid: string) => {
   });
 
   let user: GetUser = userDoc.data() as GetUser;
-  console.log(user);
   return bets;
 };
 
